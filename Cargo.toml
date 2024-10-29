@@ -5,7 +5,5 @@ edition = "2021"
 
 [dependencies]
 reqwest = { version = "^0.12", features = ["json"] }
-rodio = "^0.19"
 serde = { version = "^1", features = ["derive"] }
-stream-download = "^0.9"
-thiserror = "^1"
+stream-wav = { git = "https://github.com/ozaner/stream-wav.git", tag = "0.1.0" }
