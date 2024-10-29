@@ -1,10 +1,6 @@
-use std::io::Read;
-
 use reqwest::Url;
 use serde::Deserialize;
-use stream_download::{storage::memory::MemoryStorageProvider, StreamDownload};
-
-use crate::StreamingWav;
+use stream_wav::{self, HttpStreamingWav, NewHttpWavError};
 
 const DEFAULT_ENDPOINT: &str = "http://127.0.0.1:7851";
 
@@ -30,7 +26,7 @@ impl Client {
         text: impl AsRef<str>,
         voice: impl AsRef<str>,
         language: impl AsRef<str>,
-    ) -> Result<StreamingWav<impl Read>, Box<dyn std::error::Error>> {
+    ) -> Result<HttpStreamingWav<i16>, NewHttpWavError> {
         let mut url = self.address.join("api/tts-generate-streaming").unwrap();
         url.query_pairs_mut()
             .append_pair("text", text.as_ref())
@@ -39,14 +35,7 @@ impl Client {
             .append_pair("output_file", "stream_output.wav") //no need to change this...
             .finish();
 
-        let reader = StreamDownload::new_http(
-            url,
-            MemoryStorageProvider,
-            stream_download::Settings::default(),
-        )
-        .await?;
-
-        Ok(StreamingWav::new(reader)?)
+        stream_wav::new_http_wav(url).await
     }
 
     pub async fn get_ready(&self) -> reqwest::Result<bool> {
