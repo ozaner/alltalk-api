@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 reqwest = { version = "^0.12.2", features = ["json"] }
 serde = { version = "^1.0.113", features = ["derive"] }
-stream-wav = { git = "https://github.com/ozaner/stream-wav.git", tag = "0.1.0" }
+stream-wav = { git = "https://github.com/ozaner/stream-wav.git", tag = "0.2.0" }
 
 # For examples
 [dev-dependencies]

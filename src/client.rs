@@ -35,7 +35,7 @@ impl Client {
             .append_pair("output_file", "stream_output.wav") //no need to change this...
             .finish();
 
-        stream_wav::new_http_wav(url).await
+        stream_wav::get_wav_stream(self.client.clone(), url).await
     }
 
     pub async fn get_ready(&self) -> reqwest::Result<bool> {
