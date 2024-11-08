@@ -1,10 +1,10 @@
-use alltalk_api::Client;
+use alltalk_api::{reqwest, Client};
 use rodio::{OutputStream, Sink, Source};
 use std::io::{self, Write};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let client = Client::new();
+    let client = Client::new(reqwest::Client::new());
     let mut input = String::new();
 
     // Check if the server is ready before we start

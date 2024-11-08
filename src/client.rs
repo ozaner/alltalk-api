@@ -10,15 +10,12 @@ pub struct Client {
 }
 
 impl Client {
-    pub fn new() -> Self {
-        Client::from_address(Url::parse(DEFAULT_ENDPOINT).unwrap())
+    pub fn new(client: reqwest::Client) -> Self {
+        Client::from_address(client, Url::parse(DEFAULT_ENDPOINT).unwrap())
     }
 
-    pub fn from_address(address: Url) -> Self {
-        Client {
-            address,
-            client: reqwest::Client::new(),
-        }
+    pub fn from_address(client: reqwest::Client, address: Url) -> Self {
+        Client { address, client }
     }
 
     pub async fn generate_tts_stream(
@@ -193,12 +190,6 @@ impl Client {
         } else {
             Ok(SetValueResponse::Error)
         }
-    }
-}
-
-impl Default for Client {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
