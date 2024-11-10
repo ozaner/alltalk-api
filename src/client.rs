@@ -4,6 +4,7 @@ use stream_wav::{self, HttpStreamingWav, NewHttpWavError};
 
 const DEFAULT_ENDPOINT: &str = "http://127.0.0.1:7851";
 
+#[derive(Debug, Clone)]
 pub struct Client {
     address: Url,
     client: reqwest::Client,
@@ -193,7 +194,7 @@ impl Client {
     }
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Settings {
     pub current_model_loaded: String,
     pub manufacturer_name: String,
@@ -218,7 +219,7 @@ pub struct Settings {
     pub multimodel_capable: bool,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum SetValueResponse {
     Success(bool),
     Error,
